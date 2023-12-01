@@ -1,26 +1,26 @@
-import * as React from 'react';
-import {NavigationContainer, ParamListBase} from '@react-navigation/native';
+import * as React from "react";
+import { NavigationContainer, ParamListBase } from "@react-navigation/native";
 import {
   createNativeStackNavigator,
   NativeStackScreenProps,
-} from '@react-navigation/native-stack';
-import {Text, TouchableHighlight, View} from 'react-native';
-import {useCallback} from 'react';
+} from "@react-navigation/native-stack";
+import { Text, TouchableHighlight, View } from "react-native";
+import { useCallback } from "react";
 
 type RootStackParamList = {
   Home: undefined;
   Details: undefined;
 };
-type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
-type DetailsScreenProps = NativeStackScreenProps<ParamListBase, 'Details'>;
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
+type DetailsScreenProps = NativeStackScreenProps<ParamListBase, "Details">;
 
-function HomeScreen({navigation}: HomeScreenProps) {
+function HomeScreen({ navigation }: HomeScreenProps) {
   const onClick = useCallback(() => {
-    navigation.navigate('Details');
+    navigation.navigate("Details");
   }, [navigation]);
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableHighlight onPress={onClick}>
         <Text>Home Screen</Text>
       </TouchableHighlight>
@@ -28,13 +28,13 @@ function HomeScreen({navigation}: HomeScreenProps) {
   );
 }
 
-function DetailsScreen({navigation}: DetailsScreenProps) {
+function DetailsScreen({ navigation }: DetailsScreenProps) {
   const onClick = useCallback(() => {
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   }, [navigation]);
 
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <TouchableHighlight onPress={onClick}>
         <Text>Details Screen</Text>
       </TouchableHighlight>
@@ -50,7 +50,7 @@ function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{title: 'Home'}}
+          options={{ title: "Home" }}
         />
         <Stack.Screen name="Details">
           {props => <DetailsScreen {...props} />}
