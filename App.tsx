@@ -2,12 +2,8 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Settings from "./src/pages/Settings";
-import Orders from "./src/pages/Orders";
-import Delivery from "./src/pages/Delivery";
 import { useState } from "react";
-import SignIn from "./src/pages/SignIn";
-import SignUp from "./src/pages/SignUp";
+import { Delivery, Orders, Settings, SignIn, SignUp } from "./src/screens";
 
 // 로그인 여부에 따라 스크린을 제한하기 위해 type을 두 개로 나눔
 export type LoggedInParamList = {

@@ -1,11 +1,11 @@
 import { Text, View } from "react-native";
 
-function Delivery() {
+function Ing() {
   return (
     <View>
-      <Text>배달 화면</Text>
+      <Text>주문 지도</Text>
     </View>
   );
 }
 
-export default Delivery;
+export default Ing;
