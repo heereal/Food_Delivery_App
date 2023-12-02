@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Platform,
   Pressable,
@@ -19,6 +20,7 @@ type SignUpScreenProps = NativeStackScreenProps<
 >;
 
 function SignUp({ navigation }: SignUpScreenProps) {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +32,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
   const signUp = async () => {
     console.log(email, name, password);
     try {
+      setLoading(true);
       const response = await axios.post("/user", {
         email,
         name,
@@ -38,13 +41,24 @@ function SignUp({ navigation }: SignUpScreenProps) {
       console.log(response);
       Alert.alert("알림", "회원가입 되었습니다.");
     } catch (error) {
-      const errorResponse = (error as AxiosError).response;
-      console.error(errorResponse);
+      // 에러의 타입을 알 수 없기 때문에 타입 추론
+      if (axios.isAxiosError(error)) {
+        const errorResponse = error.response;
+        console.error(errorResponse);
+
+        if (errorResponse) {
+          Alert.alert("알림", errorResponse.data.message);
+        }
+      }
     } finally {
+      setLoading(false);
     }
   };
 
   const onSubmit = useCallback(() => {
+    if (loading) {
+      return;
+    }
     if (!email || !email.trim()) {
       return Alert.alert("알림", "이메일을 입력해주세요.");
     }
@@ -69,7 +83,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
     }
 
     signUp();
-  }, [email, name, password]);
+  }, [loading, email, name, password]);
 
   const canGoNext = email && name && password;
 
@@ -132,9 +146,13 @@ function SignUp({ navigation }: SignUpScreenProps) {
               ? StyleSheet.compose(styles.loginButton, styles.loginButtonActive)
               : styles.loginButton
           }
-          disabled={!canGoNext}
+          disabled={!canGoNext || loading}
           onPress={onSubmit}>
-          <Text style={styles.loginButtonText}>회원가입</Text>
+          {loading ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.loginButtonText}>회원가입</Text>
+          )}
         </Pressable>
       </View>
     </DismissKeyboardView>
