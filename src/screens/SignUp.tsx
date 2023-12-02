@@ -12,7 +12,8 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import DismissKeyboardView from "../components/DismissKeyboardView";
 import { UnauthenticatedParamList } from "../../AppInner";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import Config from "react-native-config";
 
 type SignUpScreenProps = NativeStackScreenProps<
   UnauthenticatedParamList,
@@ -33,13 +34,14 @@ function SignUp({ navigation }: SignUpScreenProps) {
     console.log(email, name, password);
     try {
       setLoading(true);
-      const response = await axios.post("/user", {
+      const response = await axios.post(`${Config.API_URL}/user`, {
         email,
         name,
         password,
       });
       console.log(response);
       Alert.alert("알림", "회원가입 되었습니다.");
+      navigation.navigate("SignIn");
     } catch (error) {
       // 에러의 타입을 알 수 없기 때문에 타입 추론
       if (axios.isAxiosError(error)) {
