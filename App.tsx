@@ -6,20 +6,20 @@ import { useState } from "react";
 import { Delivery, Orders, Settings, SignIn, SignUp } from "./src/screens";
 
 // 로그인 여부에 따라 스크린을 제한하기 위해 type을 두 개로 나눔
-export type LoggedInParamList = {
+export type AuthenticatedParamList = {
   Orders: undefined;
   Settings: undefined;
   Delivery: undefined;
   Complete: { orderId: string };
 };
 
-export type RootStackParamList = {
+export type UnauthenticatedParamList = {
   SignIn: undefined;
   SignUp: undefined;
 };
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<UnauthenticatedParamList>();
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
