@@ -48,12 +48,14 @@ function SignIn({ navigation }: SignInScreenProps) {
         <Text style={styles.label}>이메일</Text>
         <TextInput
           placeholder="이메일을 입력해주세요."
+          placeholderTextColor="#666"
           style={styles.textInput}
           value={email}
           onChangeText={setEmail}
           importantForAutofill="yes"
           autoComplete="email"
           textContentType="emailAddress"
+          keyboardType="email-address"
           returnKeyType="next"
           clearButtonMode="while-editing"
           ref={emailRef}
@@ -66,6 +68,7 @@ function SignIn({ navigation }: SignInScreenProps) {
         <TextInput
           style={styles.textInput}
           placeholder="비밀번호를 입력해주세요."
+          placeholderTextColor="#666"
           onChangeText={setPassword}
           value={password}
           autoComplete="password"
