@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { UnauthenticatedParamList } from "../../App";
+import DismissKeyboardView from "../components/DismissKeyboardView";
 
 type SignInScreenProps = NativeStackScreenProps<
   UnauthenticatedParamList,
@@ -43,7 +44,7 @@ function SignIn({ navigation }: SignInScreenProps) {
   };
 
   return (
-    <>
+    <DismissKeyboardView>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
         <TextInput
@@ -95,7 +96,7 @@ function SignIn({ navigation }: SignInScreenProps) {
           <Text>회원가입하기</Text>
         </Pressable>
       </View>
-    </>
+    </DismissKeyboardView>
   );
 }
 

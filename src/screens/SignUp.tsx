@@ -56,7 +56,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
   const canGoNext = email && name && password;
 
   return (
-    <>
+    <DismissKeyboardView>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
         <TextInput
@@ -119,7 +119,7 @@ function SignUp({ navigation }: SignUpScreenProps) {
           <Text style={styles.loginButtonText}>회원가입</Text>
         </Pressable>
       </View>
-    </>
+    </DismissKeyboardView>
   );
 }
 
