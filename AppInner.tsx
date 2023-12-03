@@ -62,7 +62,7 @@ function AppInner() {
     }
   }, [isLoggedIn, disconnect]);
 
-  // 앱 실행 시 토큰 있으면 로그인함
+  // 앱 실행 시 refreshToken 있으면 로그인
   useEffect(() => {
     const getTokenAndRefresh = async () => {
       try {
@@ -102,6 +102,43 @@ function AppInner() {
       }
     };
     getTokenAndRefresh();
+  }, [dispatch]);
+
+  // accessToken 만료 시 재발급
+  useEffect(() => {
+    axios.interceptors.response.use(
+      response => response,
+      async error => {
+        const {
+          config,
+          response: { status },
+        } = error;
+
+        if (status === 419 && error.response.data.code === "expired") {
+          const originalRequest = config;
+          const refreshToken = await EncryptedStorage.getItem("refreshToken");
+
+          // token refresh 요청
+          const { data } = await axios.post(
+            `${Config.API_URL}/refreshToken`,
+            {},
+            { headers: { authorization: `Bearer ${refreshToken}` } },
+          );
+
+          // 새로운 토큰 저장
+          dispatch(userSlice.actions.setAccessToken(data.data.accessToken));
+
+          // originalRequest에 accessToken 갱신
+          originalRequest.headers.authorization = `Bearer ${data.data.accessToken}`;
+
+          // originalRequest 새로운 accessToken으로 재요청
+          return axios(originalRequest);
+        }
+
+        // 419 제외한 에러는 원래 request 함수의 catch문으로 이동
+        return Promise.reject(error);
+      },
+    );
   }, [dispatch]);
 
   return isLoggedIn ? (

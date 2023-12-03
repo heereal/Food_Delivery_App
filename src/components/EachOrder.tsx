@@ -8,6 +8,7 @@ import { RootState } from "../store/reducer";
 import Config from "react-native-config";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AuthenticatedParamList } from "../../AppInner";
+import getDistanceFromLatLonInKm from "../utils/getDistanceFromLatLonInKm";
 
 interface Props {
   item: Order;
@@ -65,13 +66,13 @@ function EachOrder({ item }: Props) {
           {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
         </Text>
         <Text style={styles.eachInfo}>
-          {/* {getDistanceFromLatLonInKm(
+          {getDistanceFromLatLonInKm(
             start.latitude,
             start.longitude,
             end.latitude,
             end.longitude,
           ).toFixed(1)}
-          km */}
+          km
         </Text>
       </Pressable>
       {detail && (
