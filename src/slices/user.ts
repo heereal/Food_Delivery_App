@@ -9,6 +9,7 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
+  // 동기 액션
   reducers: {
     setUser(state, action) {
       state.email = action.payload.email;
@@ -16,7 +17,7 @@ const userSlice = createSlice({
       state.accessToken = action.payload.accessToken;
     },
   },
-  extraReducers: builder => {},
+  extraReducers: builder => {}, // 비동기 액션
 });
 
 export default userSlice;
