@@ -17,6 +17,7 @@ import axios from "axios";
 import Config from "react-native-config";
 import userSlice from "../slices/user";
 import EncryptedStorage from "react-native-encrypted-storage";
+import { colors } from "../utils/colors";
 
 type SignInScreenProps = NativeStackScreenProps<
   UnauthenticatedParamList,
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   loginButtonActive: {
-    backgroundColor: "slateblue",
+    backgroundColor: colors.activeButtonColor,
   },
   loginButtonText: {
     color: "white",

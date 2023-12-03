@@ -14,6 +14,7 @@ import DismissKeyboardView from "../components/DismissKeyboardView";
 import { UnauthenticatedParamList } from "../../AppInner";
 import axios from "axios";
 import Config from "react-native-config";
+import { colors } from "../utils/colors";
 
 type SignUpScreenProps = NativeStackScreenProps<
   UnauthenticatedParamList,
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   loginButtonActive: {
-    backgroundColor: "slateblue",
+    backgroundColor: colors.activeButtonColor,
   },
   loginButtonText: {
     color: "white",
