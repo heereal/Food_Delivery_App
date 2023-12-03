@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import axios, { AxiosError } from "axios";
 import Config from "react-native-config";
@@ -12,6 +12,21 @@ import { colors } from "../utils/colors";
 function Settings() {
   const dispatch = useAppDispatch();
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
+  const money = useSelector((state: RootState) => state.user.money);
+  const name = useSelector((state: RootState) => state.user.name);
+
+  useEffect(() => {
+    async function getMoney() {
+      const response = await axios.get<{ data: number }>(
+        `${Config.API_URL}/showmethemoney`,
+        {
+          headers: { authorization: `Bearer ${accessToken}` },
+        },
+      );
+      dispatch(userSlice.actions.setMoney(response.data.data));
+    }
+    getMoney();
+  }, [accessToken, dispatch]);
 
   const onLogout = useCallback(async () => {
     try {
@@ -20,7 +35,7 @@ function Settings() {
         {},
         {
           headers: {
-            authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         },
       );
@@ -41,6 +56,15 @@ function Settings() {
 
   return (
     <View>
+      <View style={styles.money}>
+        <Text style={styles.moneyText}>
+          {name}님의 수익금{" "}
+          <Text style={{ fontWeight: "bold" }}>
+            {money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </Text>
+          원
+        </Text>
+      </View>
       <View style={styles.buttonZone}>
         <Pressable
           style={StyleSheet.compose(
@@ -56,6 +80,12 @@ function Settings() {
 }
 
 const styles = StyleSheet.create({
+  money: {
+    padding: 20,
+  },
+  moneyText: {
+    fontSize: 16,
+  },
   buttonZone: {
     alignItems: "center",
     paddingTop: 20,

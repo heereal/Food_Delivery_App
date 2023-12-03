@@ -14,8 +14,8 @@ export interface Order {
 }
 
 interface InitialState {
-  orders: Order[];
-  deliveries: Order[];
+  orders: Order[]; // 서버에서 실시간으로 받는 전체 주문 목록
+  deliveries: Order[]; // 실제로 수락한 주문 목록
 }
 
 const initialState: InitialState = {
@@ -42,6 +42,7 @@ const orderSlice = createSlice({
       if (index > -1) {
         state.orders.splice(index, 1);
       }
+      
       const delivery = state.deliveries.findIndex(
         v => v.orderId === action.payload,
       );
