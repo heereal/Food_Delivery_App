@@ -1,23 +1,16 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/reducer";
 import { Order } from "../slices/order";
+import EachOrder from "../components/EachOrder";
+import { useCallback } from "react";
 
 function Orders() {
   const orders = useSelector((state: RootState) => state.order.orders);
-  const toggleDetail = () => {};
 
-  const renderItem = ({ item }: { item: Order }) => {
-    return (
-      <View key={item.orderId} style={styles.orderContainer}>
-        <Pressable onPress={toggleDetail} style={styles.info}>
-          <Text style={styles.eachInfo}>
-            {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원
-          </Text>
-        </Pressable>
-      </View>
-    );
-  };
+  const renderItem = useCallback(({ item }: { item: Order }) => {
+    return <EachOrder item={item} />;
+  }, []);
 
   return (
     <View>
@@ -31,18 +24,6 @@ function Orders() {
 }
 
 const styles = StyleSheet.create({
-  orderContainer: {
-    borderRadius: 5,
-    margin: 5,
-    padding: 10,
-    backgroundColor: "lightgray",
-  },
-  info: {
-    flexDirection: "row",
-  },
-  eachInfo: {
-    flex: 1,
-  },
   buttonWrapper: {
     flexDirection: "row",
   },
