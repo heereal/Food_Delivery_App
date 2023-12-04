@@ -22,3 +22,14 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        // 네이버 지도 저장소
+        maven {
+            url 'https://naver.jfrog.io/artifactory/maven/'
+        }
+    }
+}
