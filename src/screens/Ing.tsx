@@ -13,7 +13,6 @@ type IngScreenProps = NativeStackScreenProps<
 >;
 
 function Ing({ navigation }: IngScreenProps) {
-  console.dir(navigation);
   const deliveries = useSelector((state: RootState) => state.order.deliveries);
   const [myPosition, setMyPosition] = useState<{
     latitude: number;
