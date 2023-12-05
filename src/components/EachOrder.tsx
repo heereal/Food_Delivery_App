@@ -150,11 +150,9 @@ const styles = StyleSheet.create({
   },
   info: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
-  eachInfo: {
-    flex: 1,
-  },
+  eachInfo: {},
   buttonWrapper: {
     flexDirection: "row",
     paddingTop: 10,

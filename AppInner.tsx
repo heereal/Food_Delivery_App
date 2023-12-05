@@ -12,6 +12,7 @@ import axios from "axios";
 import Config from "react-native-config";
 import userSlice from "./src/slices/user";
 import { Alert } from "react-native";
+import usePermissions from "./src/hooks/usePermissions";
 
 // 로그인 여부에 따라 스크린을 제한하기 위해 type을 두 개로 나눔
 export type AuthenticatedParamList = {
@@ -33,6 +34,8 @@ function AppInner() {
   const dispatch = useAppDispatch();
   const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
   const [socket, disconnect] = useSocket();
+
+  usePermissions(); // 위치, 카메라 등 권한 요청
 
   // 로그인 한 경우 웹소켓 연결
   useEffect(() => {
