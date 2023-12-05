@@ -96,11 +96,12 @@ function Complete() {
     const formData = new FormData();
     formData.append("image", image);
     formData.append("orderId", orderId);
-    
+
     try {
       await axios.post(`${Config.API_URL}/complete`, formData, {
         headers: {
           authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
         },
       });
       Alert.alert("알림", "완료처리 되었습니다.");
