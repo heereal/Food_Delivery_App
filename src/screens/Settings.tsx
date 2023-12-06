@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+} from "react-native";
 import axios, { AxiosError } from "axios";
 import Config from "react-native-config";
 import { useAppDispatch } from "../store";
@@ -8,13 +15,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/reducer";
 import EncryptedStorage from "react-native-encrypted-storage";
 import { colors } from "../utils/colors";
+import orderSlice from "../slices/order";
+import CompletedImage from "../components/CompletedImage";
 
 function Settings() {
   const dispatch = useAppDispatch();
   const accessToken = useSelector((state: RootState) => state.user.accessToken);
   const money = useSelector((state: RootState) => state.user.money);
   const name = useSelector((state: RootState) => state.user.name);
+  const completes = useSelector((state: RootState) => state.order.completes);
 
+  // 수익금
   useEffect(() => {
     async function getMoney() {
       const response = await axios.get<{ data: number }>(
@@ -27,6 +38,21 @@ function Settings() {
     }
     getMoney();
   }, [accessToken, dispatch]);
+
+  // 배달 완료 목록
+  useEffect(() => {
+    async function getCompletes() {
+      const response = await axios.get<{ data: number }>(
+        `${Config.API_URL}/completes`,
+        {
+          headers: { authorization: `Bearer ${accessToken}` },
+        },
+      );
+      console.log("completes", response.data);
+      dispatch(orderSlice.actions.setCompletes(response.data.data));
+    }
+    getCompletes();
+  }, [dispatch, accessToken]);
 
   const onLogout = useCallback(async () => {
     try {
@@ -64,6 +90,14 @@ function Settings() {
           </Text>
           원
         </Text>
+      </View>
+      <View>
+        <FlatList
+          data={completes}
+          numColumns={3}
+          keyExtractor={o => o.orderId}
+          renderItem={CompletedImage}
+        />
       </View>
       <View style={styles.buttonZone}>
         <Pressable
