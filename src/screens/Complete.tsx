@@ -65,7 +65,8 @@ function Complete() {
     return ImagePicker.openCamera({
       includeBase64: true, // 미리보기 표시 가능
       includeExif: true,
-      cropping: true,
+      saveToPhotos: true, // 사진 갤러리에 저장
+      // cropping: true,
     })
       .then(onResponse)
       .catch(console.log);
