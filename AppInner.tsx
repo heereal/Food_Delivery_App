@@ -13,6 +13,7 @@ import Config from "react-native-config";
 import userSlice from "./src/slices/user";
 import { Alert } from "react-native";
 import usePermissions from "./src/hooks/usePermissions";
+import SplashScreen from "react-native-splash-screen";
 
 // 로그인 여부에 따라 스크린을 제한하기 위해 type을 두 개로 나눔
 export type AuthenticatedParamList = {
@@ -71,6 +72,7 @@ function AppInner() {
       try {
         const token = await EncryptedStorage.getItem("refreshToken");
         if (!token) {
+          SplashScreen.hide();
           return;
         }
 
@@ -101,7 +103,7 @@ function AppInner() {
           Alert.alert("알림", "다시 로그인 해주세요.");
         }
       } finally {
-        // 잠깐 로그인 화면이 보이는 것은 SplashScreen으로 숨길 예정
+        SplashScreen.hide();
       }
     };
     getTokenAndRefresh();
