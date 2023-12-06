@@ -14,6 +14,8 @@ import userSlice from "./src/slices/user";
 import { Alert } from "react-native";
 import usePermissions from "./src/hooks/usePermissions";
 import SplashScreen from "react-native-splash-screen";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // 로그인 여부에 따라 스크린을 제한하기 위해 type을 두 개로 나눔
 export type AuthenticatedParamList = {
@@ -151,17 +153,17 @@ function AppInner() {
       <Tab.Screen
         name="Orders"
         component={Orders}
-        options={{ title: "오더 목록" }}
+        options={{ title: "오더 목록", tabBarIcon: () => <FontAwesome5 name="list" size={20} />, }}
       />
       <Tab.Screen
         name="Delivery"
         component={Delivery}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, tabBarIcon: () => <FontAwesome5 name="map" size={20} />, }}
       />
       <Tab.Screen
         name="Settings"
         component={Settings}
-        options={{ title: "내 정보" }}
+        options={{ title: "내 정보",tabBarIcon: () => <FontAwesome name="gear" size={25} />, }}
       />
     </Tab.Navigator>
   ) : (
