@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597174864968",
+    "project_id": "food-delivery-app-65ca8",
+    "storage_bucket": "food-delivery-app-65ca8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597174864968:android:551d452b6f4afc73f55c7d",
+        "android_client_info": {
+          "package_name": "com.heereal.fooddeliveryapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOoDnGyzZCXmrk5dwe0446mok_YUkGbuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

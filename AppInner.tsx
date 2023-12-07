@@ -16,6 +16,8 @@ import usePermissions from "./src/hooks/usePermissions";
 import SplashScreen from "react-native-splash-screen";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import messaging from "@react-native-firebase/messaging";
+import { colors } from "./src/utils/colors";
 
 // 로그인 여부에 따라 스크린을 제한하기 위해 type을 두 개로 나눔
 export type AuthenticatedParamList = {
@@ -148,6 +150,24 @@ function AppInner() {
     );
   }, [dispatch]);
 
+  // FCM 앱 토큰 설정
+  useEffect(() => {
+    async function getToken() {
+      try {
+        if (!messaging().isDeviceRegisteredForRemoteMessages) {
+          await messaging().registerDeviceForRemoteMessages();
+        }
+        const token = await messaging().getToken();
+        console.log("phone token", token);
+        dispatch(userSlice.actions.setPhoneToken(token));
+        return axios.post(`${Config.API_URL}/phonetoken`, { token });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getToken();
+  }, [dispatch]);
+
   return isLoggedIn ? (
     <Tab.Navigator>
       <Tab.Screen
@@ -155,7 +175,10 @@ function AppInner() {
         component={Orders}
         options={{
           title: "오더 목록",
-          tabBarIcon: () => <FontAwesome5 name="list" size={20} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="list" size={20} style={{ color }} />
+          ),
+          tabBarActiveTintColor: colors.activeButtonColor,
         }}
       />
       <Tab.Screen
@@ -163,7 +186,10 @@ function AppInner() {
         component={Delivery}
         options={{
           headerShown: false,
-          tabBarIcon: () => <FontAwesome5 name="map" size={20} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="map" size={20} style={{ color }} />
+          ),
+          tabBarActiveTintColor: colors.activeButtonColor,
         }}
       />
       <Tab.Screen
@@ -172,7 +198,10 @@ function AppInner() {
         options={{
           title: "내 정보",
           unmountOnBlur: true,
-          tabBarIcon: () => <FontAwesome name="gear" size={25} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="gear" size={25} style={{ color }} />
+          ),
+          tabBarActiveTintColor: colors.activeButtonColor,
         }}
       />
     </Tab.Navigator>
